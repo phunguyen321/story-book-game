@@ -10,7 +10,7 @@ import confetti from 'canvas-confetti';
   styleUrl: './home.scss',
 })
 export class Home implements AfterViewInit {
-  currentScene = 0; // 0: Mở đầu, 1: Cảnh 1, 2: Cảnh 2, 3: Cảnh 3
+  currentScene = 0; // 0: Mở đầu, 1: Chặng 1, 2: Chặng 2, 3: Chặng 3
 
   showRabbitBubble = false;
   showFlowerBubble = false;
@@ -20,7 +20,7 @@ export class Home implements AfterViewInit {
     this.autoPlayNarration();
   }
 
-  // Chuyển đổi cảnh truyện
+  // Chuyển đổi cảnh truyện kèm reset trạng thái bong bóng
   goToScene(sceneIndex: number) {
     this.currentScene = sceneIndex;
     this.resetBubbles();
@@ -30,14 +30,14 @@ export class Home implements AfterViewInit {
     }, 300);
   }
 
-  // Reset trạng thái bong bóng chữ
+  // Ẩn tất cả bong bóng hội thoại
   resetBubbles() {
     this.showRabbitBubble = false;
     this.showFlowerBubble = false;
     this.showButterflyBubble = false;
   }
 
-  // Tự động đọc lời kể khi lật cảnh
+  // Tự động đọc lời kể cốt truyện khi chuyển cảnh
   autoPlayNarration() {
     const texts = [
       "",
@@ -84,7 +84,7 @@ export class Home implements AfterViewInit {
     setTimeout(() => this.showButterflyBubble = false, 2000);
   }
 
-  // Hàm phát âm thanh giọng đọc tiếng Việt
+  // Hàm tổng hợp Web Speech API phát âm tiếng Việt
   speakText(text: string, rate: number) {
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
@@ -95,11 +95,11 @@ export class Home implements AfterViewInit {
     }
   }
 
-  // Kết thúc truyện bắn pháo hoa
+  // Hoàn thành trò chơi bắn pháo hoa tưng bừng
   finishGame() {
     confetti({
-      particleCount: 120,
-      spread: 80,
+      particleCount: 150,
+      spread: 90,
       origin: { y: 0.6 }
     });
     this.speakText("Bé giỏi quá! Trò chơi kết thúc rồi.", 0.9);

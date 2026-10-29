@@ -3,58 +3,63 @@
   <div class="scene" *ngIf="currentScene === 0">
     <img src="/images/intro.png" alt="Mở đầu" class="full-screen-bg" />
     <div class="overlay-content center-align">
-      <h1 class="book-title">✨ Khu Vườn Của Thỏ Con ✨</h1>
-      <button class="btn-action pulse-animation" (click)="goToScene(1)">
-        <span>🐰</span> Đi chơi cùng Thỏ 🌸
+      <h1 class="book-title floating-title">✨ Khu Vườn Của Thỏ Con ✨</h1>
+      <button class="btn-action pulse-glow" (click)="goToScene(1)">
+        <span>🐰 Bắt đầu khám phá 🌸</span>
       </button>
     </div>
   </div>
 
   <!-- ================= SCENE 1: CHẶNG 1 (/images/abc.png) ================= -->
-  <div class="scene" *ngIf="currentScene === 1">
+  <div class="scene fade-in" *ngIf="currentScene === 1">
     <img src="/images/abc.png" alt="Chặng 1 Thỏ đi chơi" class="full-screen-bg" />
 
-    <div class="narration-box bounce-in">🗣️ "Thỏ Con đi chơi. Thỏ đi, thỏ đi!"</div>
+    <div class="narration-box bounce-down">🗣️ "Thỏ Con đi chơi. Thỏ đi, thỏ đi!"</div>
 
+    <!-- Vùng chạm Thỏ -->
     <div class="hotspot rabbit-spot-1" (click)="playRabbitSound()" (touchstart)="playRabbitSound()">
       <div class="speech-bubble pop-up" *ngIf="showRabbitBubble">Thỏ! Thỏ! 🐰✨</div>
     </div>
 
     <div class="nav-controls">
-      <button class="btn-nav bounce-hover" (click)="goToScene(2)">Tiếp theo ➡️</button>
+      <button class="btn-nav vip-btn" (click)="goToScene(2)">Tiếp theo ➔</button>
     </div>
   </div>
 
   <!-- ================= SCENE 2: CHẶNG 2 (/images/xyz.png) ================= -->
-  <div class="scene" *ngIf="currentScene === 2">
+  <div class="scene fade-in" *ngIf="currentScene === 2">
     <img src="/images/xyz.png" alt="Chặng 2 Thỏ gặp hoa" class="full-screen-bg" />
 
-    <div class="narration-box bounce-in">🗣️ "Ó! Bông hoa đẹp quá! Hoa, hoa!"</div>
+    <div class="narration-box bounce-down">🗣️ "Ó! Bông hoa đẹp quá! Hoa, hoa!"</div>
 
+    <!-- Vùng chạm Thỏ -->
     <div class="hotspot rabbit-spot-2" (click)="playRabbitSound()" (touchstart)="playRabbitSound()">
       <div class="speech-bubble pop-up" *ngIf="showRabbitBubble">Thỏ! Thỏ! 🐰✨</div>
     </div>
 
+    <!-- Vùng chạm Hoa -->
     <div class="hotspot flower-spot-2" (click)="playFlowerSound()" (touchstart)="playFlowerSound()">
       <div class="speech-bubble pop-up flower-bubble" *ngIf="showFlowerBubble">Hoa! Hoa! 🌸✨</div>
     </div>
 
     <div class="nav-controls">
-      <button class="btn-nav bounce-hover" (click)="goToScene(1)">⬅️ Quay lại</button>
-      <button class="btn-nav bounce-hover" (click)="goToScene(3)">Tiếp theo ➡️</button>
+      <button class="btn-nav vip-btn" (click)="goToScene(1)">⬅️ Quay lại</button>
+      <button class="btn-nav vip-btn" (click)="goToScene(3)">Tiếp theo ➔</button>
     </div>
   </div>
 
   <!-- ================= SCENE 3: CHẶNG 3 (/images/vvv.png) ================= -->
-  <div class="scene" *ngIf="currentScene === 3">
+  <div class="scene fade-in" *ngIf="currentScene === 3">
     <img src="/images/vvv.png" alt="Chặng 3 Thỏ gặp bướm" class="full-screen-bg" />
 
-    <div class="narration-box bounce-in">🗣️ "Bướm bay! Bướm bay! Thỏ chào bướm nhé!"</div>
+    <div class="narration-box bounce-down">🗣️ "Bướm bay! Bướm bay! Thỏ chào bướm nhé!"</div>
 
+    <!-- Vùng chạm Thỏ -->
     <div class="hotspot rabbit-spot-3" (click)="playRabbitSound()" (touchstart)="playRabbitSound()">
       <div class="speech-bubble pop-up" *ngIf="showRabbitBubble">Thỏ! Thỏ! 🐰✨</div>
     </div>
 
+    <!-- Vùng chạm Bướm -->
     <div
       class="hotspot butterfly-spot-3"
       (click)="playButterflySound()"
@@ -66,8 +71,10 @@
     </div>
 
     <div class="nav-controls">
-      <button class="btn-nav bounce-hover" (click)="goToScene(2)">⬅️ Quay lại</button>
-      <button class="btn-nav btn-finish pulse-animation" (click)="finishGame()">Kết thúc 🎉</button>
+      <button class="btn-nav vip-btn" (click)="goToScene(2)">⬅️ Quay lại</button>
+      <button class="btn-nav vip-btn btn-finish pulse-glow" (click)="finishGame()">
+        Kết thúc 🎉
+      </button>
     </div>
   </div>
 </div>

@@ -1,3 +1,4 @@
+/* Khóa cuộn trang toàn cục, tối ưu di động và iPad */
 :host {
   display: block;
   width: 100vw;
@@ -34,6 +35,23 @@
   overflow: hidden;
 }
 
+/* Hiệu ứng xuất hiện cảnh mượt mà */
+.fade-in {
+  animation: fadeInScene 0.4s ease-in-out forwards;
+}
+
+@keyframes fadeInScene {
+  from {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Ép ảnh nền hiển thị trọn vẹn, sắc nét */
 .full-screen-bg {
   width: 100%;
   height: 100%;
@@ -55,7 +73,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
 }
 
 .center-align {
@@ -63,10 +82,14 @@
 }
 
 .book-title {
-  font-size: clamp(28px, 6vw, 48px);
+  font-size: clamp(30px, 6vw, 52px);
   color: #fff;
-  margin-bottom: 25px;
-  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  margin-bottom: 30px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+  letter-spacing: 1px;
+}
+
+.floating-title {
   animation: floatTitle 3s ease-in-out infinite;
 }
 
@@ -76,78 +99,79 @@
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-8px);
+    transform: translateY(-10px);
   }
 }
 
-/* Hiệu ứng nhịp đập thu hút cho nút chính */
-.pulse-animation {
-  animation: pulseButton 2s infinite;
-}
-
-@keyframes pulseButton {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(248, 196, 113, 0.7);
-  }
-  70% {
-    transform: scale(1.05);
-    box-shadow: 0 0 0 15px rgba(248, 196, 113, 0);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(248, 196, 113, 0);
-  }
-}
-
+/* Nút bắt đầu VIP */
 .btn-action {
-  background: linear-gradient(135deg, #f8c471, #f39c12);
+  background: linear-gradient(135deg, #ffd700, #ff8c00);
   border: 4px solid #fff;
-  padding: 16px 35px;
-  font-size: clamp(18px, 4vw, 26px);
-  font-weight: bold;
+  padding: 18px 42px;
+  font-size: clamp(18px, 4vw, 28px);
+  font-weight: 800;
   color: #fff;
-  border-radius: 40px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  border-radius: 50px;
+  box-shadow:
+    0 10px 30px rgba(255, 140, 0, 0.5),
+    inset 0 2px 5px rgba(255, 255, 255, 0.6);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition:
-    transform 0.2s ease,
-    filter 0.2s ease;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .btn-action:active {
-  transform: scale(0.95);
+  transform: scale(0.92);
 }
 
-/* Hộp lời kể cốt truyện sinh động */
+/* Hiệu ứng nhịp đập hào quang cho nút VIP */
+.pulse-glow {
+  animation: pulseGlowAnim 2s infinite;
+}
+
+@keyframes pulseGlowAnim {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
+  }
+  70% {
+    transform: scale(1.06);
+    box-shadow: 0 0 0 20px rgba(255, 215, 0, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+  }
+}
+
+/* Hộp lời kể cốt truyện */
 .narration-box {
   position: absolute;
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, #ffffff, #f9f9f9);
-  padding: 10px 28px;
-  border-radius: 35px;
-  font-size: clamp(14px, 3.5vw, 22px);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 10px 30px;
+  border-radius: 40px;
+  font-size: clamp(15px, 3.5vw, 24px);
   color: #2c3e50;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
   border: 4px solid #a9dfbf;
   z-index: 30;
   white-space: nowrap;
-  animation: bounceInDown 0.6s ease;
 }
 
-@keyframes bounceInDown {
+.bounce-down {
+  animation: bounceDownAnim 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes bounceDownAnim {
   0% {
     opacity: 0;
-    transform: translateX(-50%) translateY(-40px);
-  }
-  60% {
-    opacity: 1;
-    transform: translateX(-50%) translateY(10px);
+    transform: translateX(-50%) translateY(-50px);
   }
   100% {
+    opacity: 1;
     transform: translateX(-50%) translateY(0);
   }
 }
@@ -160,7 +184,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Tọa độ hiện tại của bạn */
+/* Tọa độ tối ưu cho các cảnh */
 .rabbit-spot-1 {
   width: 40%;
   height: 47%;
@@ -192,33 +216,32 @@
   top: 25%;
 }
 
-/* ================== BONG BÓNG HỘI THOẠI CỰC ĐẸP ================== */
+/* ================== BONG BÓNG HỘI THOẠI VIP ================== */
 .speech-bubble {
   position: absolute;
-  top: -50px;
+  top: -55px;
   left: 50%;
   transform: translateX(-50%);
   background: linear-gradient(135deg, #ffeb3b, #fbc02d);
   color: #fff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-  padding: 8px 20px;
-  border-radius: 25px;
-  font-size: clamp(14px, 3vw, 20px);
-  font-weight: bold;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  border: 3px solid #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-size: clamp(15px, 3.2vw, 22px);
+  font-weight: 800;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  border: 4px solid #fff;
   white-space: nowrap;
   z-index: 40;
 }
 
-/* Mũi tên nhọn chỉ xuống của bong bóng hội thoại */
 .speech-bubble::after {
   content: '';
   position: absolute;
-  bottom: -10px;
+  bottom: -12px;
   left: 50%;
   transform: translateX(-50%);
-  border-width: 10px 10px 0;
+  border-width: 12px 12px 0;
   border-style: solid;
   border-color: #ffeb3b transparent;
   display: block;
@@ -241,18 +264,17 @@
   border-color: #b388ff transparent;
 }
 
-/* Hiệu ứng pop-up nảy khi chạm vào nhân vật */
 .pop-up {
   animation: popUpBounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 @keyframes popUpBounce {
   0% {
-    transform: translateX(-50%) scale(0) rotate(-10deg);
+    transform: translateX(-50%) scale(0) rotate(-15deg);
     opacity: 0;
   }
   70% {
-    transform: translateX(-50%) scale(1.15) rotate(5deg);
+    transform: translateX(-50%) scale(1.18) rotate(5deg);
     opacity: 1;
   }
   100% {
@@ -261,43 +283,7 @@
   }
 }
 
-/* ================== NÚT ĐIỀU HƯỚNG S SINH ĐỘNG ================== */
-.nav-controls {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  gap: 12px;
-  z-index: 30;
-}
-
-.btn-nav {
-  background: linear-gradient(135deg, #5dade2, #2980b9);
-  border: 3px solid #fff;
-  padding: 11px 18px;
-  font-size: clamp(14px, 3vw, 18px);
-  font-weight: bold;
-  color: #fff;
-  border-radius: 30px;
-  cursor: pointer;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-  -webkit-tap-highlight-color: transparent;
-  transition:
-    transform 0.2s ease,
-    background 0.2s ease;
-}
-
-/* Hiệu ứng nhún nhẹ khi rê chuột hoặc chạm giữ */
-.bounce-hover:active,
-.btn-nav:active {
-  transform: scale(0.92);
-}
-
-.btn-finish {
-  background: linear-gradient(135deg, #f1948a, #e74c3c);
-}
-
-/* ================== NÚT ĐIỀU HƯỚNG HIỆN ĐẠI & SINH ĐỘNG ================== */
+/* ================== HỆ THỐNG NÚT ĐIỀU HƯỚNG VIP (GLASSMORPHISM) ================== */
 .nav-controls {
   position: absolute;
   bottom: 25px;
@@ -307,42 +293,36 @@
   z-index: 30;
 }
 
-.btn-nav {
-  /* Hiệu ứng kính mờ (Glassmorphism) kết hợp màu sắc kẹo ngọt bắt mắt */
+.vip-btn {
   background: linear-gradient(135deg, rgba(93, 173, 226, 0.9), rgba(41, 128, 185, 0.95));
   border: 3px solid rgba(255, 255, 255, 0.9);
-  padding: 14px 28px;
+  padding: 14px 30px;
   font-size: clamp(15px, 3.2vw, 20px);
   font-weight: 800;
   color: #fff;
-  border-radius: 50px; /* Bo tròn hoàn toàn dạng viên thuốc */
+  border-radius: 50px;
   cursor: pointer;
   box-shadow:
     0 10px 25px rgba(41, 128, 185, 0.4),
-    inset 0 2px 4px rgba(255, 255, 255, 0.5); /* Tạo hiệu ứng khối 3D lõm/nổi */
+    inset 0 2px 4px rgba(255, 255, 255, 0.5);
   -webkit-tap-highlight-color: transparent;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  backdrop-filter: blur(5px);
-
-  /* Hiệu ứng chuyển động mượt mà khi load */
+  backdrop-filter: blur(8px);
   animation: floatNav 3s ease-in-out infinite;
-  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition:
+    transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    box-shadow 0.2s ease;
 
-  /* Hiệu ứng khi bé di chuột hoặc nhấn giữ */
   &:hover {
     transform: translateY(-3px) scale(1.03);
     box-shadow: 0 15px 30px rgba(41, 128, 185, 0.6);
   }
 
   &:active {
-    transform: translateY(2px) scale(0.95);
+    transform: translateY(2px) scale(0.94);
     box-shadow: 0 5px 10px rgba(41, 128, 185, 0.3);
   }
 }
 
-/* Biến nút "Kết thúc" thành màu hồng cam dâu tây nổi bật */
 .btn-finish {
   background: linear-gradient(135deg, rgba(241, 148, 138, 0.9), rgba(231, 76, 60, 0.95));
   box-shadow:
@@ -354,7 +334,6 @@
   }
 }
 
-/* Hoạt ảnh lơ lửng nhẹ nhàng cho nút điều hướng */
 @keyframes floatNav {
   0%,
   100% {
@@ -364,6 +343,7 @@
     transform: translateY(-5px);
   }
 }
+
 // .hotspot {
 //   position: absolute;
 //   z-index: 20;
