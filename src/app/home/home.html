@@ -1,0 +1,63 @@
+<div class="game-container">
+  <!-- ================= BƯỚC 1: MÀN HÌNH MỞ ĐẦU ================= -->
+  <div class="scene garden-bg" *ngIf="currentScene === 0">
+    <div class="character rabbit-intro animate-bounce">🐰</div>
+    <div class="title-card">
+      <h1>Khu Vườn Của Thỏ Con</h1>
+    </div>
+    <button class="btn-start" (click)="goToScene(1)">Đi chơi cùng Thỏ 🌸</button>
+  </div>
+
+  <!-- ================= BƯỚC 2: CẢNH 1 (THỎ CON) ================= -->
+  <div class="scene forest-bg" *ngIf="currentScene === 1">
+    <div class="narration-box">🗣️ "Thỏ Con đi chơi. Thỏ đi, thỏ đi!"</div>
+
+    <!-- Nhân vật Thỏ tương tác khi chạm -->
+    <div #rabbit class="character interactive-rabbit" (click)="playRabbitSound()">
+      🐰
+      <span class="speech-bubble" *ngIf="showRabbitBubble">Thỏ! Thỏ!</span>
+    </div>
+
+    <div class="nav-controls">
+      <button class="btn-next" (click)="goToScene(2)">Tiếp theo ➡️</button>
+    </div>
+  </div>
+
+  <!-- ================= BƯỚC 3: CẢNH 2 (BÔNG HOA) ================= -->
+  <div class="scene garden-bg" *ngIf="currentScene === 2">
+    <div class="narration-box">🗣️ "Ó! Bông hoa đẹp quá! Hoa, hoa!"</div>
+
+    <div class="stage-elements">
+      <div class="character rabbit-static">🐰</div>
+      <!-- Bông hoa tương tác -->
+      <div #flower class="object interactive-flower" (click)="playFlowerSound()">
+        🌸
+        <span class="speech-bubble" *ngIf="showFlowerBubble">Hoa! Hoa!</span>
+      </div>
+    </div>
+
+    <div class="nav-controls">
+      <button class="btn-prev" (click)="goToScene(1)">⬅️ Quay lại</button>
+      <button class="btn-next" (click)="goToScene(3)">Tiếp theo ➡️</button>
+    </div>
+  </div>
+
+  <!-- ================= BƯỚC 4: CẢNH 3 (CON BƯỚM) ================= -->
+  <div class="scene meadow-bg" *ngIf="currentScene === 3">
+    <div class="narration-box">🗣️ "Bướm bay! Bướm bay! Thỏ chào bướm nhé!"</div>
+
+    <div class="stage-elements">
+      <div class="character rabbit-static">🐰</div>
+      <!-- Con bướm tương tác -->
+      <div #butterfly class="object interactive-butterfly" (click)="playButterflySound()">
+        🦋
+        <span class="speech-bubble" *ngIf="showButterflyBubble">Bướm! Bướm!</span>
+      </div>
+    </div>
+
+    <div class="nav-controls">
+      <button class="btn-prev" (click)="goToScene(2)">⬅️ Quay lại</button>
+      <button class="btn-finish" (click)="finishGame()">Kết thúc 🎉</button>
+    </div>
+  </div>
+</div>
