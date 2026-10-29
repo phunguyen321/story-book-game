@@ -1,4 +1,4 @@
-/* Khóa toàn bộ cuộn trang, phủ kín hoàn toàn màn hình iPad */
+/* Khóa toàn bộ cuộn trang, phủ kín hoàn toàn màn hình */
 :host {
   display: block;
   width: 100vw;
@@ -8,6 +8,7 @@
   top: 0;
   left: 0;
   touch-action: none;
+  background-color: #111;
 }
 
 .game-scene {
@@ -17,22 +18,28 @@
   font-family: 'Comic Sans MS', 'Nunito', sans-serif;
   user-select: none;
   -webkit-user-select: none;
-  background-color: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+/* Mỗi cảnh là một khung chứa tuyệt đối phủ kín màn hình */
 .scene {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Ép ảnh AI hiển thị FULL màn hình chuẩn dọc */
+/* Ép ảnh AI hiển thị FULL màn hình, giữ tỷ lệ và căn giữa trên mọi màn hình nhỏ/lớn */
 .full-screen-bg {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: center;
   position: absolute;
@@ -60,7 +67,7 @@
 }
 
 .book-title {
-  font-size: 46px;
+  font-size: clamp(32px, 5vw, 46px); /* Responsive chữ theo màn hình */
   color: #fff;
   margin-bottom: 25px;
   text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
@@ -69,8 +76,8 @@
 .btn-action {
   background: #f8c471;
   border: none;
-  padding: 20px 45px;
-  font-size: 26px;
+  padding: 18px 40px;
+  font-size: clamp(20px, 4vw, 26px);
   font-weight: bold;
   color: #fff;
   border-radius: 40px;
@@ -82,13 +89,13 @@
 /* Hộp lời kể cốt truyện */
 .narration-box {
   position: absolute;
-  top: 40px;
+  top: 3%;
   left: 50%;
   transform: translateX(-50%);
   background: rgba(255, 255, 255, 0.95);
-  padding: 12px 35px;
+  padding: 10px 25px;
   border-radius: 35px;
-  font-size: 24px;
+  font-size: clamp(16px, 3vw, 24px);
   color: #2c3e50;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   border: 3px solid #a9dfbf;
@@ -96,57 +103,55 @@
   white-space: nowrap;
 }
 
-/* VÙNG CHẠM (HOTSPOT) */
+/* VÙNG CHẠM (HOTSPOT) - Sử dụng % tuyệt đối theo khung cảnh */
 .hotspot {
   position: absolute;
   z-index: 20;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 
-  /* MẸO: Mở dấu comment dòng bên dưới nếu bạn muốn hiện khung viền đỏ trực quan khi test trên iPad */
+  /* MẸO: Bật dòng dưới nếu muốn kiểm tra khung trên màn hình nhỏ */
   /* border: 2px dashed red; */
 }
 
-/* ================== TỌA ĐỘ TINH CHỈNH CHI TIẾT ================== */
+/* ================== TỌA ĐỘ RESPONSIVE THEO PHẦN TRĂM (%) ================== */
 
-/* CẢNH 1 (/images/abc.png): Thỏ chạy giữa màn hình */
+/* CẢNH 1 (/images/abc.png) */
 .rabbit-spot-1 {
-  width: 40vw;
-  height: 47vh;
-  left: 32vw;
-  bottom: 9vh;
+  width: 40%;
+  height: 47%;
+  left: 32%;
+  bottom: 9%;
 }
 
-/* CẢNH 2 (/images/xyz.png): Thỏ nhỏ lùn & Hoa bự */
-/* Vùng Thỏ: Đã dịch sang phải (left: 20vw) và thu gọn (width: 32vw) để ôm khít Thỏ */
+/* CẢNH 2 (/images/xyz.png) */
 .rabbit-spot-2 {
-  width: 37vw;
-  height: 39vh;
-  left: 30vw;
-  bottom: 9vh;
+  width: 37%;
+  height: 39%;
+  left: 30%;
+  bottom: 9%;
 }
 
-/* Vùng Hoa: Nằm lùi hẳn sang bên phải tạo khoảng hở an toàn */
 .flower-spot-2 {
-  width: 38vw;
-  height: 27vh;
-  right: 7vw;
-  bottom: 49vh;
+  width: 38%;
+  height: 27%;
+  right: 7%;
+  bottom: 49%;
 }
 
-/* CẢNH 3 (/images/vvv.png): Thỏ bên trái & Bướm bên phải */
+/* CẢNH 3 (/images/vvv.png) */
 .rabbit-spot-3 {
-  width: 36vw;
-  height: 54vh;
-  left: 21vw;
-  bottom: 17vh;
+  width: 36%;
+  height: 54%;
+  left: 21%;
+  bottom: 17%;
 }
 
 .butterfly-spot-3 {
-  width: 37vw;
-  height: 27vh;
-  right: 5vw;
-  top: 25vh;
+  width: 37%;
+  height: 27%;
+  right: 5%;
+  top: 25%;
 }
 
 /* ================================================================ */
@@ -161,7 +166,7 @@
   color: #333;
   padding: 8px 20px;
   border-radius: 25px;
-  font-size: 20px;
+  font-size: clamp(14px, 2.5vw, 20px);
   font-weight: bold;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
   animation: popUp 0.3s ease-in-out;
@@ -183,8 +188,8 @@
 /* Nút điều hướng qua lại giữa các cảnh */
 .nav-controls {
   position: absolute;
-  bottom: 30px;
-  right: 30px;
+  bottom: 3%;
+  right: 3%;
   display: flex;
   gap: 15px;
   z-index: 30;
@@ -193,8 +198,8 @@
 .btn-nav {
   background: rgba(133, 193, 233, 0.95);
   border: none;
-  padding: 14px 28px;
-  font-size: 20px;
+  padding: 12px 24px;
+  font-size: clamp(16px, 2.5vw, 20px);
   font-weight: bold;
   color: #fff;
   border-radius: 30px;
