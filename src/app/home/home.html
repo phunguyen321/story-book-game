@@ -1,63 +1,77 @@
-<div class="game-container">
-  <!-- ================= BƯỚC 1: MÀN HÌNH MỞ ĐẦU ================= -->
-  <div class="scene garden-bg" *ngIf="currentScene === 0">
-    <div class="character rabbit-intro animate-bounce">🐰</div>
-    <div class="title-card">
-      <h1>Khu Vườn Của Thỏ Con</h1>
+<div class="game-scene">
+  <!-- ================= SCENE 0: MÀN HÌNH MỞ ĐẦU ================= -->
+  <div class="scene" *ngIf="currentScene === 0">
+    <img src="/images/intro_123.png" alt="Mở đầu" class="full-screen-bg" />
+    <div class="overlay-content center-align">
+      <h1 class="book-title">Khu Vườn Của Thỏ Con</h1>
+      <button class="btn-action" (click)="goToScene(1)">Đi chơi cùng Thỏ 🌸</button>
     </div>
-    <button class="btn-start" (click)="goToScene(1)">Đi chơi cùng Thỏ 🌸</button>
   </div>
 
-  <!-- ================= BƯỚC 2: CẢNH 1 (THỎ CON) ================= -->
-  <div class="scene forest-bg" *ngIf="currentScene === 1">
+  <!-- ================= SCENE 1: THỎ ĐI CHƠI (Cập nhật đúng tọa độ ảnh dọc) ================= -->
+  <div class="scene" *ngIf="currentScene === 1">
+    <!-- Thay 'scene_1.png' bằng tên file ảnh dọc cảnh 1 của bạn -->
+    <img src="/images/abc.png" alt="Thỏ đi chơi" class="full-screen-bg" />
+
     <div class="narration-box">🗣️ "Thỏ Con đi chơi. Thỏ đi, thỏ đi!"</div>
 
-    <!-- Nhân vật Thỏ tương tác khi chạm -->
-    <div #rabbit class="character interactive-rabbit" (click)="playRabbitSound()">
-      🐰
-      <span class="speech-bubble" *ngIf="showRabbitBubble">Thỏ! Thỏ!</span>
+    <!-- Vùng chạm cho Thỏ ở Cảnh 1 (đứng ở giữa dưới màn hình dọc) -->
+    <div class="hotspot rabbit-spot-1" (click)="playRabbitSound()" (touchstart)="playRabbitSound()">
+      <div class="speech-bubble" *ngIf="showRabbitBubble">Thỏ! Thỏ! 🐰</div>
     </div>
 
     <div class="nav-controls">
-      <button class="btn-next" (click)="goToScene(2)">Tiếp theo ➡️</button>
+      <button class="btn-nav" (click)="goToScene(2)">Tiếp theo ➡️</button>
     </div>
   </div>
 
-  <!-- ================= BƯỚC 3: CẢNH 2 (BÔNG HOA) ================= -->
-  <div class="scene garden-bg" *ngIf="currentScene === 2">
+  <!-- ================= SCENE 2: THỎ GẶP HOA (Cập nhật đúng tọa độ ảnh dọc) ================= -->
+  <div class="scene" *ngIf="currentScene === 2">
+    <!-- Thay 'scene_rabbit_flower.png' bằng tên file ảnh dọc cảnh 2 của bạn -->
+    <img src="/images/xyz.png" alt="Thỏ gặp hoa" class="full-screen-bg" />
+
     <div class="narration-box">🗣️ "Ó! Bông hoa đẹp quá! Hoa, hoa!"</div>
 
-    <div class="stage-elements">
-      <div class="character rabbit-static">🐰</div>
-      <!-- Bông hoa tương tác -->
-      <div #flower class="object interactive-flower" (click)="playFlowerSound()">
-        🌸
-        <span class="speech-bubble" *ngIf="showFlowerBubble">Hoa! Hoa!</span>
-      </div>
+    <!-- Vùng chạm cho Thỏ ở Cảnh 2 -->
+    <div class="hotspot rabbit-spot-2" (click)="playRabbitSound()" (touchstart)="playRabbitSound()">
+      <div class="speech-bubble" *ngIf="showRabbitBubble">Thỏ! Thỏ! 🐰</div>
+    </div>
+
+    <!-- Vùng chạm cho Bông Hoa to ở Cảnh 2 -->
+    <div class="hotspot flower-spot-2" (click)="playFlowerSound()" (touchstart)="playFlowerSound()">
+      <div class="speech-bubble" *ngIf="showFlowerBubble">Hoa! Hoa! 🌸</div>
     </div>
 
     <div class="nav-controls">
-      <button class="btn-prev" (click)="goToScene(1)">⬅️ Quay lại</button>
-      <button class="btn-next" (click)="goToScene(3)">Tiếp theo ➡️</button>
+      <button class="btn-nav" (click)="goToScene(1)">⬅️ Quay lại</button>
+      <button class="btn-nav" (click)="goToScene(3)">Tiếp theo ➡️</button>
     </div>
   </div>
 
-  <!-- ================= BƯỚC 4: CẢNH 3 (CON BƯỚM) ================= -->
-  <div class="scene meadow-bg" *ngIf="currentScene === 3">
+  <!-- ================= SCENE 3: THỎ GẶP BƯỚM ================= -->
+  <div class="scene" *ngIf="currentScene === 3">
+    <!-- Thay 'scene_3.png' bằng tên file ảnh dọc cảnh 3 của bạn -->
+    <img src="/images/vvv.png" alt="Thỏ gặp bướm" class="full-screen-bg" />
+
     <div class="narration-box">🗣️ "Bướm bay! Bướm bay! Thỏ chào bướm nhé!"</div>
 
-    <div class="stage-elements">
-      <div class="character rabbit-static">🐰</div>
-      <!-- Con bướm tương tác -->
-      <div #butterfly class="object interactive-butterfly" (click)="playButterflySound()">
-        🦋
-        <span class="speech-bubble" *ngIf="showButterflyBubble">Bướm! Bướm!</span>
-      </div>
+    <!-- Vùng chạm cho Thỏ ở Cảnh 3 -->
+    <div class="hotspot rabbit-spot-3" (click)="playRabbitSound()" (touchstart)="playRabbitSound()">
+      <div class="speech-bubble" *ngIf="showRabbitBubble">Thỏ! Thỏ! 🐰</div>
+    </div>
+
+    <!-- Vùng chạm cho Bướm ở Cảnh 3 -->
+    <div
+      class="hotspot butterfly-spot-3"
+      (click)="playButterflySound()"
+      (touchstart)="playButterflySound()"
+    >
+      <div class="speech-bubble" *ngIf="showButterflyBubble">Bướm! Bướm! 🦋</div>
     </div>
 
     <div class="nav-controls">
-      <button class="btn-prev" (click)="goToScene(2)">⬅️ Quay lại</button>
-      <button class="btn-finish" (click)="finishGame()">Kết thúc 🎉</button>
+      <button class="btn-nav" (click)="goToScene(2)">⬅️ Quay lại</button>
+      <button class="btn-nav btn-finish" (click)="finishGame()">Kết thúc 🎉</button>
     </div>
   </div>
 </div>

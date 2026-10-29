@@ -1,47 +1,43 @@
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import gsap from 'gsap';
-import confetti from 'canvas-confetti';
+import { Component, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import confetti from 'canvas-confetti';
 
 @Component({
   selector: 'app-home',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class Home {
+export class Home implements AfterViewInit {
   currentScene = 0; // 0: Mở đầu, 1: Cảnh 1, 2: Cảnh 2, 3: Cảnh 3
 
   showRabbitBubble = false;
   showFlowerBubble = false;
   showButterflyBubble = false;
 
-  @ViewChild('rabbit') rabbit!: ElementRef;
-  @ViewChild('flower') flower!: ElementRef;
-  @ViewChild('butterfly') butterfly!: ElementRef;
-
   ngAfterViewInit() {
     this.autoPlayNarration();
   }
 
-  // Chuyển cảnh và tự động đọc lời kể
+  // Chuyển đổi cảnh truyện
   goToScene(sceneIndex: number) {
     this.currentScene = sceneIndex;
     this.resetBubbles();
 
-    // Đợi DOM render xong cảnh mới rồi chạy hiệu ứng âm thanh/lời thoại
     setTimeout(() => {
       this.autoPlayNarration();
     }, 300);
   }
 
+  // Reset trạng thái bong bóng chữ
   resetBubbles() {
     this.showRabbitBubble = false;
     this.showFlowerBubble = false;
     this.showButterflyBubble = false;
   }
 
-  // Tự động phát âm thanh lời kể tương ứng theo cảnh
+  // Tự động đọc lời kể khi lật cảnh
   autoPlayNarration() {
     const texts = [
       "",
@@ -50,87 +46,62 @@ export class Home {
       "Bướm bay! Bướm bay! Thỏ chào bướm nhé!"
     ];
 
-    if (this.currentScene > 0 && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel(); // Dừng câu trước nếu có
-      const utterance = new SpeechSynthesisUtterance(texts[this.currentScene]);
-      utterance.lang = 'vi-VN'; // Giọng đọc tiếng Việt chuẩn
-      utterance.rate = 0.9;     // Nói chậm lại cho bé dễ nghe
-      window.speechSynthesis.speak(utterance);
+    if (this.currentScene > 0) {
+      this.speakText(texts[this.currentScene], 0.9);
     }
   }
 
-  // HÀNH ĐỘNG 1: Chạm vào Thỏ (Nhún nhảy bằng GSAP)
+  // Tương tác chạm vào Thỏ
   playRabbitSound() {
     this.showRabbitBubble = true;
-    this.speakText("Thỏ! Thỏ!");
+    this.showFlowerBubble = false;
+    this.showButterflyBubble = false;
 
-    if (this.rabbit) {
-      gsap.to(this.rabbit.nativeElement, {
-        scaleY: 1.2,
-        scaleX: 0.9,
-        y: -30,
-        duration: 0.2,
-        yoyo: true,
-        repeat: 1,
-        ease: "power1.out"
-      });
-    }
+    this.speakText("Thỏ! Thỏ!", 1.1);
+
+    setTimeout(() => this.showRabbitBubble = false, 2000);
   }
 
-  // HÀNH ĐỘNG 2: Chạm vào Hoa (Đung đưa qua lại bằng GSAP)
+  // Tương tác chạm vào Hoa
   playFlowerSound() {
     this.showFlowerBubble = true;
-    this.speakText("Hoa! Hoa!");
+    this.showRabbitBubble = false;
+    this.showButterflyBubble = false;
 
-    if (this.flower) {
-      gsap.to(this.flower.nativeElement, {
-        rotation: 15,
-        duration: 0.15,
-        yoyo: true,
-        repeat: 3,
-        ease: "sine.inOut",
-        onComplete: () => {
-          gsap.to(this.flower.nativeElement, { rotation: 0 });
-        }
-      });
-    }
+    this.speakText("Hoa! Hoa!", 1.0);
+
+    setTimeout(() => this.showFlowerBubble = false, 2000);
   }
 
-  // HÀNH ĐỘNG 3: Chạm vào Bướm (Vỗ cánh bay lượn bằng GSAP)
+  // Tương tác chạm vào Bướm
   playButterflySound() {
     this.showButterflyBubble = true;
-    this.speakText("Bướm! Bướm!");
+    this.showRabbitBubble = false;
+    this.showFlowerBubble = false;
 
-    if (this.butterfly) {
-      gsap.to(this.butterfly.nativeElement, {
-        x: "+=50",
-        y: "-=40",
-        scaleX: -1,
-        duration: 0.4,
-        yoyo: true,
-        repeat: 1,
-        ease: "power1.inOut"
-      });
-    }
+    this.speakText("Bướm! Bướm!", 1.0);
+
+    setTimeout(() => this.showButterflyBubble = false, 2000);
   }
 
-  // Phát âm thanh tên nhân vật khi bé chạm
-  speakText(text: string) {
+  // Hàm phát âm thanh giọng đọc tiếng Việt
+  speakText(text: string, rate: number) {
     if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'vi-VN';
-      utterance.rate = 1;
+      utterance.rate = rate;
       window.speechSynthesis.speak(utterance);
     }
   }
 
-  // Khi bấm Kết thúc -> Bắn pháo hoa giấy chúc mừng bé
+  // Kết thúc truyện bắn pháo hoa
   finishGame() {
     confetti({
-      particleCount: 100,
-      spread: 70,
+      particleCount: 120,
+      spread: 80,
       origin: { y: 0.6 }
     });
-    this.speakText("Bé giỏi quá! Trò chơi kết thúc rồi.");
+    this.speakText("Bé giỏi quá! Trò chơi kết thúc rồi.", 0.9);
   }
 }
