@@ -1,10 +1,12 @@
 <div class="game-scene">
   <!-- ================= SCENE 0: MÀN HÌNH MỞ ĐẦU ================= -->
   <div class="scene" *ngIf="currentScene === 0">
-    <img src="/images/intro_123.png" alt="Mở đầu" class="full-screen-bg" />
+    <img src="/images/intro.png" alt="Mở đầu" class="full-screen-bg" />
     <div class="overlay-content center-align">
-      <h1 class="book-title">Khu Vườn Của Thỏ Con</h1>
-      <button class="btn-action" (click)="goToScene(1)">Đi chơi cùng Thỏ 🌸</button>
+      <h1 class="book-title">✨ Khu Vườn Của Thỏ Con ✨</h1>
+      <button class="btn-action pulse-animation" (click)="goToScene(1)">
+        <span>🐰</span> Đi chơi cùng Thỏ 🌸
+      </button>
     </div>
   </div>
 
@@ -12,15 +14,14 @@
   <div class="scene" *ngIf="currentScene === 1">
     <img src="/images/abc.png" alt="Chặng 1 Thỏ đi chơi" class="full-screen-bg" />
 
-    <div class="narration-box">🗣️ "Thỏ Con đi chơi. Thỏ đi, thỏ đi!"</div>
+    <div class="narration-box bounce-in">🗣️ "Thỏ Con đi chơi. Thỏ đi, thỏ đi!"</div>
 
-    <!-- Vùng chạm cho Thỏ ở Cảnh 1 -->
     <div class="hotspot rabbit-spot-1" (click)="playRabbitSound()" (touchstart)="playRabbitSound()">
-      <div class="speech-bubble" *ngIf="showRabbitBubble">Thỏ! Thỏ! 🐰</div>
+      <div class="speech-bubble pop-up" *ngIf="showRabbitBubble">Thỏ! Thỏ! 🐰✨</div>
     </div>
 
     <div class="nav-controls">
-      <button class="btn-nav" (click)="goToScene(2)">Tiếp theo ➡️</button>
+      <button class="btn-nav bounce-hover" (click)="goToScene(2)">Tiếp theo ➡️</button>
     </div>
   </div>
 
@@ -28,21 +29,19 @@
   <div class="scene" *ngIf="currentScene === 2">
     <img src="/images/xyz.png" alt="Chặng 2 Thỏ gặp hoa" class="full-screen-bg" />
 
-    <div class="narration-box">🗣️ "Ó! Bông hoa đẹp quá! Hoa, hoa!"</div>
+    <div class="narration-box bounce-in">🗣️ "Ó! Bông hoa đẹp quá! Hoa, hoa!"</div>
 
-    <!-- VÙNG CHẠM THỎ (Được đính chính lại đúng hàm playRabbitSound) -->
     <div class="hotspot rabbit-spot-2" (click)="playRabbitSound()" (touchstart)="playRabbitSound()">
-      <div class="speech-bubble" *ngIf="showRabbitBubble">Thỏ! Thỏ! 🐰</div>
+      <div class="speech-bubble pop-up" *ngIf="showRabbitBubble">Thỏ! Thỏ! 🐰✨</div>
     </div>
 
-    <!-- VÙNG CHẠM HOA BỰ (Được đính chính lại đúng hàm playFlowerSound) -->
     <div class="hotspot flower-spot-2" (click)="playFlowerSound()" (touchstart)="playFlowerSound()">
-      <div class="speech-bubble" *ngIf="showFlowerBubble">Hoa! Hoa! 🌸</div>
+      <div class="speech-bubble pop-up flower-bubble" *ngIf="showFlowerBubble">Hoa! Hoa! 🌸✨</div>
     </div>
 
     <div class="nav-controls">
-      <button class="btn-nav" (click)="goToScene(1)">⬅️ Quay lại</button>
-      <button class="btn-nav" (click)="goToScene(3)">Tiếp theo ➡️</button>
+      <button class="btn-nav bounce-hover" (click)="goToScene(1)">⬅️ Quay lại</button>
+      <button class="btn-nav bounce-hover" (click)="goToScene(3)">Tiếp theo ➡️</button>
     </div>
   </div>
 
@@ -50,10 +49,10 @@
   <div class="scene" *ngIf="currentScene === 3">
     <img src="/images/vvv.png" alt="Chặng 3 Thỏ gặp bướm" class="full-screen-bg" />
 
-    <div class="narration-box">🗣️ "Bướm bay! Bướm bay! Thỏ chào bướm nhé!"</div>
+    <div class="narration-box bounce-in">🗣️ "Bướm bay! Bướm bay! Thỏ chào bướm nhé!"</div>
 
     <div class="hotspot rabbit-spot-3" (click)="playRabbitSound()" (touchstart)="playRabbitSound()">
-      <div class="speech-bubble" *ngIf="showRabbitBubble">Thỏ! Thỏ! 🐰</div>
+      <div class="speech-bubble pop-up" *ngIf="showRabbitBubble">Thỏ! Thỏ! 🐰✨</div>
     </div>
 
     <div
@@ -61,12 +60,14 @@
       (click)="playButterflySound()"
       (touchstart)="playButterflySound()"
     >
-      <div class="speech-bubble" *ngIf="showButterflyBubble">Bướm! Bướm! 🦋</div>
+      <div class="speech-bubble pop-up butterfly-bubble" *ngIf="showButterflyBubble">
+        Bướm! Bướm! 🦋✨
+      </div>
     </div>
 
     <div class="nav-controls">
-      <button class="btn-nav" (click)="goToScene(2)">⬅️ Quay lại</button>
-      <button class="btn-nav btn-finish" (click)="finishGame()">Kết thúc 🎉</button>
+      <button class="btn-nav bounce-hover" (click)="goToScene(2)">⬅️ Quay lại</button>
+      <button class="btn-nav btn-finish pulse-animation" (click)="finishGame()">Kết thúc 🎉</button>
     </div>
   </div>
 </div>
