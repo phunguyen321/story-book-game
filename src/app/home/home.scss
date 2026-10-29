@@ -1,4 +1,4 @@
-/* Khóa toàn bộ cuộn trang, phủ kín hoàn toàn màn hình thiết bị */
+/* Khóa toàn bộ cuộn trang, phủ kín hoàn toàn màn hình iPad */
 :host {
   display: block;
   width: 100vw;
@@ -96,53 +96,60 @@
   white-space: nowrap;
 }
 
-/* VÙNG CHẠM (HOTSPOT) ĐÃ ĐƯỢC CÂN CHỈNH CHO ẢNH DỌC */
+/* VÙNG CHẠM (HOTSPOT) */
 .hotspot {
   position: absolute;
   z-index: 20;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  /* Uncomment dòng dưới đây nếu bạn muốn bật viền đỏ tạm thời để căn chỉnh trực quan trên iPad */
+
+  /* MẸO: Mở dấu comment dòng bên dưới nếu bạn muốn hiện khung viền đỏ trực quan khi test trên iPad */
   /* border: 2px dashed red; */
 }
 
-/* Cảnh 1: Thỏ đứng ở khoảng giữa dưới */
+/* ================== TỌA ĐỘ TINH CHỈNH CHI TIẾT ================== */
+
+/* CẢNH 1 (/images/abc.png): Thỏ chạy giữa màn hình */
 .rabbit-spot-1 {
-  width: 45vw;
-  height: 45vh;
-  left: 28vw;
-  bottom: 20vh;
-}
-
-/* Cảnh 2: Thỏ nằm bên trái, Hoa to nằm bên phải */
-.rabbit-spot-2 {
-  width: 42vw;
-  height: 48vh;
-  left: 10vw;
-  bottom: 22vh;
-}
-
-.flower-spot-2 {
   width: 40vw;
-  height: 45vh;
-  right: 8vw;
-  bottom: 22vh;
+  height: 47vh;
+  left: 32vw;
+  bottom: 9vh;
 }
 
-/* Cảnh 3: Thỏ nằm bên trái, Bướm bay ở góc trên bên phải */
+/* CẢNH 2 (/images/xyz.png): Thỏ nhỏ lùn & Hoa bự */
+/* Vùng Thỏ: Đã dịch sang phải (left: 20vw) và thu gọn (width: 32vw) để ôm khít Thỏ */
+.rabbit-spot-2 {
+  width: 37vw;
+  height: 39vh;
+  left: 30vw;
+  bottom: 9vh;
+}
+
+/* Vùng Hoa: Nằm lùi hẳn sang bên phải tạo khoảng hở an toàn */
+.flower-spot-2 {
+  width: 38vw;
+  height: 27vh;
+  right: 7vw;
+  bottom: 49vh;
+}
+
+/* CẢNH 3 (/images/vvv.png): Thỏ bên trái & Bướm bên phải */
 .rabbit-spot-3 {
-  width: 45vw;
-  height: 48vh;
-  left: 10vw;
-  bottom: 20vh;
+  width: 36vw;
+  height: 54vh;
+  left: 21vw;
+  bottom: 17vh;
 }
 
 .butterfly-spot-3 {
-  width: 35vw;
-  height: 30vh;
-  right: 15vw;
-  top: 35vh;
+  width: 37vw;
+  height: 27vh;
+  right: 5vw;
+  top: 25vh;
 }
+
+/* ================================================================ */
 
 /* Bong bóng hội thoại khi chạm */
 .speech-bubble {
@@ -176,17 +183,17 @@
 /* Nút điều hướng qua lại giữa các cảnh */
 .nav-controls {
   position: absolute;
-  bottom: 40px;
-  right: 40px;
+  bottom: 30px;
+  right: 30px;
   display: flex;
-  gap: 20px;
+  gap: 15px;
   z-index: 30;
 }
 
 .btn-nav {
   background: rgba(133, 193, 233, 0.95);
   border: none;
-  padding: 14px 30px;
+  padding: 14px 28px;
   font-size: 20px;
   font-weight: bold;
   color: #fff;
@@ -199,3 +206,10 @@
 .btn-finish {
   background: rgba(241, 148, 138, 0.95);
 }
+// .hotspot {
+//   position: absolute;
+//   z-index: 20;
+//   cursor: pointer;
+//   -webkit-tap-highlight-color: transparent;
+//   border: 2px dashed red; /* Bật dòng này lên sẽ thấy khung chữ nhật màu đỏ trên iPad để căn chỉnh */
+// }
