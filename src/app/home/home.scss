@@ -1,19 +1,21 @@
-/* Khóa cuộn trang toàn cục, tối ưu di động và iPad */
+/* Khóa cuộn trang toàn cục, sử dụng biến --vh chống tràn thanh địa chỉ mobile */
 :host {
   display: block;
   width: 100vw;
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   overflow: hidden;
   position: fixed;
   top: 0;
   left: 0;
   touch-action: none;
-  background-color: #0b0b0b;
+  background-color: #000000;
 }
 
 .game-scene {
   width: 100vw;
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   position: relative;
   font-family: 'Comic Sans MS', 'Nunito', sans-serif;
   user-select: none;
@@ -21,6 +23,28 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  background-color: #000000;
+}
+
+.game-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Khi xoay ngang máy (Landscape), tự động bóp chiều rộng để chừa 2 bên màu đen */
+@media (orientation: landscape) {
+  .game-container {
+    width: calc(var(--vh, 1vh) * 100 * 9 / 16);
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+  }
 }
 
 .scene {
@@ -51,15 +75,16 @@
   }
 }
 
-/* Ép ảnh nền hiển thị trọn vẹn, sắc nét */
+/* Ép ảnh nền TRÀN KÍN tuyệt đối khung container ở màn hình dọc */
 .full-screen-bg {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 1;
+  pointer-events: none;
 }
 
 .overlay-content {
@@ -82,9 +107,9 @@
 }
 
 .book-title {
-  font-size: clamp(30px, 6vw, 52px);
+  font-size: clamp(24px, 4.5vw, 42px);
   color: #fff;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
   letter-spacing: 1px;
 }
@@ -107,8 +132,8 @@
 .btn-action {
   background: linear-gradient(135deg, #ffd700, #ff8c00);
   border: 4px solid #fff;
-  padding: 18px 42px;
-  font-size: clamp(18px, 4vw, 28px);
+  padding: 14px 32px;
+  font-size: clamp(15px, 3.5vw, 22px);
   font-weight: 800;
   color: #fff;
   border-radius: 50px;
@@ -147,16 +172,16 @@
 /* Hộp lời kể cốt truyện */
 .narration-box {
   position: absolute;
-  top: 20px;
+  top: max(15px, env(safe-area-inset-top));
   left: 50%;
   transform: translateX(-50%);
   background: rgba(255, 255, 255, 0.95);
-  padding: 10px 30px;
+  padding: 6px 18px;
   border-radius: 40px;
-  font-size: clamp(15px, 3.5vw, 24px);
+  font-size: clamp(13px, 2.8vw, 18px);
   color: #2c3e50;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-  border: 4px solid #a9dfbf;
+  border: 3px solid #a9dfbf;
   z-index: 30;
   white-space: nowrap;
 }
@@ -176,15 +201,15 @@
   }
 }
 
-/* VÙNG CHẠM (HOTSPOT) */
+/* ================== VÙNG CHẠM (HOTSPOT) ================== */
 .hotspot {
   position: absolute;
   z-index: 20;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  /* border: 2px dashed rgba(255, 0, 0, 0.8); */
 }
 
-/* Tọa độ tối ưu cho các cảnh */
 .rabbit-spot-1 {
   width: 40%;
   height: 47%;
@@ -219,18 +244,18 @@
 /* ================== BONG BÓNG HỘI THOẠI VIP ================== */
 .speech-bubble {
   position: absolute;
-  top: -55px;
+  top: -45px;
   left: 50%;
   transform: translateX(-50%);
   background: linear-gradient(135deg, #ffeb3b, #fbc02d);
   color: #fff;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  padding: 10px 22px;
+  padding: 6px 16px;
   border-radius: 30px;
-  font-size: clamp(15px, 3.2vw, 22px);
+  font-size: clamp(13px, 2.5vw, 17px);
   font-weight: 800;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
-  border: 4px solid #fff;
+  border: 3px solid #fff;
   white-space: nowrap;
   z-index: 40;
 }
@@ -238,10 +263,10 @@
 .speech-bubble::after {
   content: '';
   position: absolute;
-  bottom: -12px;
+  bottom: -8px;
   left: 50%;
   transform: translateX(-50%);
-  border-width: 12px 12px 0;
+  border-width: 8px 8px 0;
   border-style: solid;
   border-color: #ffeb3b transparent;
   display: block;
@@ -283,21 +308,21 @@
   }
 }
 
-/* ================== HỆ THỐNG NÚT ĐIỀU HƯỚNG VIP (GLASSMORPHISM) ================== */
+/* ================== HỆ THỐNG NÚT ĐIỀU HƯỚNG VIP ================== */
 .nav-controls {
   position: absolute;
-  bottom: 25px;
-  right: 25px;
+  bottom: max(15px, env(safe-area-inset-bottom));
+  right: max(15px, env(safe-area-inset-right));
   display: flex;
-  gap: 15px;
+  gap: 10px;
   z-index: 30;
 }
 
 .vip-btn {
   background: linear-gradient(135deg, rgba(93, 173, 226, 0.9), rgba(41, 128, 185, 0.95));
   border: 3px solid rgba(255, 255, 255, 0.9);
-  padding: 14px 30px;
-  font-size: clamp(15px, 3.2vw, 20px);
+  padding: 10px 20px;
+  font-size: clamp(12px, 2.5vw, 15px);
   font-weight: 800;
   color: #fff;
   border-radius: 50px;
