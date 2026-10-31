@@ -57,10 +57,23 @@ export class Home implements AfterViewInit {
       butterflyAudioUrl: '/audios/butter_voice.m4a'   // <-- Thay URL âm thanh Bướm
     }
   ];
-
   ngAfterViewInit() {
     this.autoPlayNarration();
+    this.updateViewportHeight();
+    window.addEventListener('resize', this.updateViewportHeight);
+    window.addEventListener('orientationchange', this.updateViewportHeight);
   }
+
+  ngOnDestroy() {
+    window.removeEventListener('resize', this.updateViewportHeight);
+    window.removeEventListener('orientationchange', this.updateViewportHeight);
+  }
+
+  // Hàm đo chiều cao thực tế bỏ qua thanh địa chỉ của trình duyệt mobile
+  private updateViewportHeight = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  };
 
   // Chuyển đổi cảnh truyện kèm reset trạng thái bong bóng và phát âm thanh
   goToScene(sceneIndex: number) {
@@ -152,6 +165,5 @@ export class Home implements AfterViewInit {
       spread: 90,
       origin: { y: 0.6 }
     });
-    // Nếu bạn có file âm thanh kết thúc, có thể gọi this.playSound('/audio/finish.mp3') ở đây
   }
 }

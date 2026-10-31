@@ -1,9 +1,9 @@
-/* Khóa cuộn trang toàn cục, tối ưu di động, iPad và màn hình độ phân giải cao */
+/* Khóa cuộn trang toàn cục, sử dụng biến --vh chống tràn thanh địa chỉ mobile */
 :host {
   display: block;
   width: 100vw;
   height: 100vh;
-  height: 100dvh; /* Khắc phục triệt để lỗi 100vh bị che khuất trên mobile */
+  height: calc(var(--vh, 1vh) * 100);
   overflow: hidden;
   position: fixed;
   top: 0;
@@ -15,7 +15,7 @@
 .game-scene {
   width: 100vw;
   height: 100vh;
-  height: 100dvh;
+  height: calc(var(--vh, 1vh) * 100);
   position: relative;
   font-family: 'Comic Sans MS', 'Nunito', sans-serif;
   user-select: none;
@@ -31,7 +31,7 @@
   position: relative;
   width: 100vw;
   height: 100vh;
-  height: 100dvh;
+  height: calc(var(--vh, 1vh) * 100);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,10 +41,9 @@
 /* Khi xoay ngang máy (Landscape), tự động bóp chiều rộng để chừa 2 bên màu đen */
 @media (orientation: landscape) {
   .game-container {
-    width: calc(100vh * 9 / 16);
-    width: calc(100dvh * 9 / 16);
+    width: calc(var(--vh, 1vh) * 100 * 9 / 16);
     height: 100vh;
-    height: 100dvh;
+    height: calc(var(--vh, 1vh) * 100);
   }
 }
 
@@ -170,7 +169,7 @@
   }
 }
 
-/* Hộp lời kể cốt truyện (An toàn tránh tai thỏ phía trên) */
+/* Hộp lời kể cốt truyện */
 .narration-box {
   position: absolute;
   top: max(15px, env(safe-area-inset-top));
@@ -312,10 +311,7 @@
 /* ================== HỆ THỐNG NÚT ĐIỀU HƯỚNG VIP ================== */
 .nav-controls {
   position: absolute;
-  bottom: max(
-    15px,
-    env(safe-area-inset-bottom)
-  ); /* An toàn tuyệt đối tránh thanh vuốt home điện thoại */
+  bottom: max(15px, env(safe-area-inset-bottom));
   right: max(15px, env(safe-area-inset-right));
   display: flex;
   gap: 10px;
@@ -326,7 +322,7 @@
   background: linear-gradient(135deg, rgba(93, 173, 226, 0.9), rgba(41, 128, 185, 0.95));
   border: 3px solid rgba(255, 255, 255, 0.9);
   padding: 10px 20px;
-  font-size: clamp(12px, 2.5vw, 15px); /* Thu gọn tỉ lệ vừa vặn trên màn hình cao */
+  font-size: clamp(12px, 2.5vw, 15px);
   font-weight: 800;
   color: #fff;
   border-radius: 50px;
@@ -372,11 +368,3 @@
     transform: translateY(-5px);
   }
 }
-
-// .hotspot {
-//   position: absolute;
-//   z-index: 20;
-//   cursor: pointer;
-//   -webkit-tap-highlight-color: transparent;
-//   border: 2px dashed red; /* Bật dòng này lên sẽ thấy khung chữ nhật màu đỏ trên iPad để căn chỉnh */
-// }
