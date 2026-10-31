@@ -1,7 +1,7 @@
 <div class="game-scene">
   <!-- ================= SCENE 0: MÀN HÌNH MỞ ĐẦU ================= -->
   <div class="scene" *ngIf="currentScene === 0">
-    <img src="/images/intro.png" alt="Mở đầu" class="full-screen-bg" />
+    <img [src]="scenesConfig[0].bgImage" alt="Mở đầu" class="full-screen-bg" />
     <div class="overlay-content center-align">
       <h1 class="book-title floating-title">✨ Khu Vườn Của Thỏ Con ✨</h1>
       <button class="btn-action pulse-glow" (click)="goToScene(1)">
@@ -10,11 +10,11 @@
     </div>
   </div>
 
-  <!-- ================= SCENE 1: CHẶNG 1 (/images/abc.png) ================= -->
+  <!-- ================= SCENE 1: CHẶNG 1 ================= -->
   <div class="scene fade-in" *ngIf="currentScene === 1">
-    <img src="/images/abc.png" alt="Chặng 1 Thỏ đi chơi" class="full-screen-bg" />
+    <img [src]="scenesConfig[1].bgImage" alt="Chặng 1 Thỏ đi chơi" class="full-screen-bg" />
 
-    <div class="narration-box bounce-down">🗣️ "Thỏ Con đi chơi. Thỏ đi, thỏ đi!"</div>
+    <div class="narration-box bounce-down">🗣️ "{{ scenesConfig[1].narrationText }}"</div>
 
     <!-- Vùng chạm Thỏ -->
     <div class="hotspot rabbit-spot-1" (click)="playRabbitSound()" (touchstart)="playRabbitSound()">
@@ -26,11 +26,11 @@
     </div>
   </div>
 
-  <!-- ================= SCENE 2: CHẶNG 2 (/images/xyz.png) ================= -->
+  <!-- ================= SCENE 2: CHẶNG 2 ================= -->
   <div class="scene fade-in" *ngIf="currentScene === 2">
-    <img src="/images/xyz.png" alt="Chặng 2 Thỏ gặp hoa" class="full-screen-bg" />
+    <img [src]="scenesConfig[2].bgImage" alt="Chặng 2 Thỏ gặp hoa" class="full-screen-bg" />
 
-    <div class="narration-box bounce-down">🗣️ "Ó! Bông hoa đẹp quá! Hoa, hoa!"</div>
+    <div class="narration-box bounce-down">🗣️ "{{ scenesConfig[2].narrationText }}"</div>
 
     <!-- Vùng chạm Thỏ -->
     <div class="hotspot rabbit-spot-2" (click)="playRabbitSound()" (touchstart)="playRabbitSound()">
@@ -48,11 +48,11 @@
     </div>
   </div>
 
-  <!-- ================= SCENE 3: CHẶNG 3 (/images/vvv.png) ================= -->
+  <!-- ================= SCENE 3: CHẶNG 3 ================= -->
   <div class="scene fade-in" *ngIf="currentScene === 3">
-    <img src="/images/vvv.png" alt="Chặng 3 Thỏ gặp bướm" class="full-screen-bg" />
+    <img [src]="scenesConfig[3].bgImage" alt="Chặng 3 Thỏ gặp bướm" class="full-screen-bg" />
 
-    <div class="narration-box bounce-down">🗣️ "Bướm bay! Bướm bay! Thỏ chào bướm nhé!"</div>
+    <div class="narration-box bounce-down">🗣️ "{{ scenesConfig[3].narrationText }}"</div>
 
     <!-- Vùng chạm Thỏ -->
     <div class="hotspot rabbit-spot-3" (click)="playRabbitSound()" (touchstart)="playRabbitSound()">

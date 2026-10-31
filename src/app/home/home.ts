@@ -2,6 +2,15 @@ import { Component, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import confetti from 'canvas-confetti';
 
+interface SceneData {
+  bgImage: string;
+  narrationText: string;
+  narrationAudioUrl: string;
+  rabbitAudioUrl?: string;
+  flowerAudioUrl?: string;
+  butterflyAudioUrl?: string;
+}
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -16,11 +25,44 @@ export class Home implements AfterViewInit {
   showFlowerBubble = false;
   showButterflyBubble = false;
 
+  private currentAudio: HTMLAudioElement | null = null;
+
+  // =========================================================================
+  // BẢNG CẤU HÌNH TẬP TRUNG: Thay đổi hình ảnh và đường dẫn âm thanh tại đây
+  // =========================================================================
+  readonly scenesConfig: SceneData[] = [
+    {
+      bgImage: '/images/intro.png',
+      narrationText: '',
+      narrationAudioUrl: ''
+    },
+    {
+      bgImage: '/images/abc.png',
+      narrationText: 'Thỏ Con đi chơi. Thỏ đi, thỏ đi!',
+      narrationAudioUrl: '/audios/tho_text.m4a', // <-- Thay URL audio chặng 1
+      rabbitAudioUrl: '/audios/tho_voice.m4a'          // <-- Thay URL âm thanh Thỏ
+    },
+    {
+      bgImage: '/images/xyz.png',
+      narrationText: 'Ó! Bông hoa đẹp quá! Hoa, hoa!',
+      narrationAudioUrl: '/audios/flower_text.m4a', // <-- Thay URL audio chặng 2
+      rabbitAudioUrl: '/audios/tho_voice.m4a',
+      flowerAudioUrl: '/audios/flower_voice.m4a'         // <-- Thay URL âm thanh Hoa
+    },
+    {
+      bgImage: '/images/vvv.png',
+      narrationText: 'Bướm bay! Bướm bay! Thỏ chào bướm nhé!',
+      narrationAudioUrl: '/audios/butter_text.m4a', // <-- Thay URL audio chặng 3
+      rabbitAudioUrl: '/audios/tho_voice.m4a',
+      butterflyAudioUrl: '/audios/butter_voice.m4a'   // <-- Thay URL âm thanh Bướm
+    }
+  ];
+
   ngAfterViewInit() {
     this.autoPlayNarration();
   }
 
-  // Chuyển đổi cảnh truyện kèm reset trạng thái bong bóng
+  // Chuyển đổi cảnh truyện kèm reset trạng thái bong bóng và phát âm thanh
   goToScene(sceneIndex: number) {
     this.currentScene = sceneIndex;
     this.resetBubbles();
@@ -37,17 +79,11 @@ export class Home implements AfterViewInit {
     this.showButterflyBubble = false;
   }
 
-  // Tự động đọc lời kể cốt truyện khi chuyển cảnh
+  // Tự động phát âm thanh lời kể cốt truyện khi chuyển cảnh
   autoPlayNarration() {
-    const texts = [
-      "",
-      "Thỏ Con đi chơi. Thỏ đi, thỏ đi!",
-      "Ó! Bông hoa đẹp quá! Hoa, hoa!",
-      "Bướm bay! Bướm bay! Thỏ chào bướm nhé!"
-    ];
-
-    if (this.currentScene > 0) {
-      this.speakText(texts[this.currentScene], 0.9);
+    const currentData = this.scenesConfig[this.currentScene];
+    if (this.currentScene > 0 && currentData?.narrationAudioUrl) {
+      this.playSound(currentData.narrationAudioUrl);
     }
   }
 
@@ -57,9 +93,12 @@ export class Home implements AfterViewInit {
     this.showFlowerBubble = false;
     this.showButterflyBubble = false;
 
-    this.speakText("Thỏ! Thỏ!", 1.1);
+    const audioUrl = this.scenesConfig[this.currentScene]?.rabbitAudioUrl;
+    if (audioUrl) {
+      this.playSound(audioUrl);
+    }
 
-    setTimeout(() => this.showRabbitBubble = false, 2000);
+    setTimeout(() => (this.showRabbitBubble = false), 2000);
   }
 
   // Tương tác chạm vào Hoa
@@ -68,9 +107,12 @@ export class Home implements AfterViewInit {
     this.showRabbitBubble = false;
     this.showButterflyBubble = false;
 
-    this.speakText("Hoa! Hoa!", 1.0);
+    const audioUrl = this.scenesConfig[this.currentScene]?.flowerAudioUrl;
+    if (audioUrl) {
+      this.playSound(audioUrl);
+    }
 
-    setTimeout(() => this.showFlowerBubble = false, 2000);
+    setTimeout(() => (this.showFlowerBubble = false), 2000);
   }
 
   // Tương tác chạm vào Bướm
@@ -79,19 +121,27 @@ export class Home implements AfterViewInit {
     this.showRabbitBubble = false;
     this.showFlowerBubble = false;
 
-    this.speakText("Bướm! Bướm!", 1.0);
+    const audioUrl = this.scenesConfig[this.currentScene]?.butterflyAudioUrl;
+    if (audioUrl) {
+      this.playSound(audioUrl);
+    }
 
-    setTimeout(() => this.showButterflyBubble = false, 2000);
+    setTimeout(() => (this.showButterflyBubble = false), 2000);
   }
 
-  // Hàm tổng hợp Web Speech API phát âm tiếng Việt
-  speakText(text: string, rate: number) {
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'vi-VN';
-      utterance.rate = rate;
-      window.speechSynthesis.speak(utterance);
+  // Hàm helper tổng hợp phát file Audio chung, tự động dừng âm thanh cũ tránh đè tiếng
+  private playSound(url: string) {
+    try {
+      if (this.currentAudio) {
+        this.currentAudio.pause();
+        this.currentAudio.currentTime = 0;
+      }
+      this.currentAudio = new Audio(url);
+      this.currentAudio.play().catch((err) => {
+        console.warn('Không thể tự động phát âm thanh do chính sách trình duyệt:', err);
+      });
+    } catch (e) {
+      console.error('Lỗi phát âm thanh:', e);
     }
   }
 
@@ -102,6 +152,6 @@ export class Home implements AfterViewInit {
       spread: 90,
       origin: { y: 0.6 }
     });
-    this.speakText("Bé giỏi quá! Trò chơi kết thúc rồi.", 0.9);
+    // Nếu bạn có file âm thanh kết thúc, có thể gọi this.playSound('/audio/finish.mp3') ở đây
   }
 }
