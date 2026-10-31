@@ -1,80 +1,106 @@
 <div class="game-scene">
   <!-- ================= SCENE 0: MÀN HÌNH MỞ ĐẦU ================= -->
   <div class="scene" *ngIf="currentScene === 0">
-    <img [src]="scenesConfig[0].bgImage" alt="Mở đầu" class="full-screen-bg" />
-    <div class="overlay-content center-align">
-      <h1 class="book-title floating-title">✨ Khu Vườn Của Thỏ Con ✨</h1>
-      <button class="btn-action pulse-glow" (click)="goToScene(1)">
-        <span>🐰 Bắt đầu khám phá 🌸</span>
-      </button>
+    <div class="game-container">
+      <img [src]="scenesConfig[0].bgImage" alt="Mở đầu" class="full-screen-bg" />
+      <div class="overlay-content center-align">
+        <h1 class="book-title floating-title">✨ Khu Vườn Của Thỏ Con ✨</h1>
+        <button class="btn-action pulse-glow" (click)="goToScene(1)">
+          <span>🐰 Bắt đầu khám phá 🌸</span>
+        </button>
+      </div>
     </div>
   </div>
 
   <!-- ================= SCENE 1: CHẶNG 1 ================= -->
   <div class="scene fade-in" *ngIf="currentScene === 1">
-    <img [src]="scenesConfig[1].bgImage" alt="Chặng 1 Thỏ đi chơi" class="full-screen-bg" />
+    <div class="game-container">
+      <img [src]="scenesConfig[1].bgImage" alt="Chặng 1 Thỏ đi chơi" class="full-screen-bg" />
 
-    <div class="narration-box bounce-down">🗣️ "{{ scenesConfig[1].narrationText }}"</div>
+      <div class="narration-box bounce-down">🗣️ "{{ scenesConfig[1].narrationText }}"</div>
 
-    <!-- Vùng chạm Thỏ -->
-    <div class="hotspot rabbit-spot-1" (click)="playRabbitSound()" (touchstart)="playRabbitSound()">
-      <div class="speech-bubble pop-up" *ngIf="showRabbitBubble">Thỏ! Thỏ! 🐰✨</div>
-    </div>
+      <!-- Vùng chạm Thỏ -->
+      <div
+        class="hotspot rabbit-spot-1"
+        (click)="playRabbitSound()"
+        (touchstart)="playRabbitSound()"
+      >
+        <div class="speech-bubble pop-up" *ngIf="showRabbitBubble">Thỏ! Thỏ! 🐰✨</div>
+      </div>
 
-    <div class="nav-controls">
-      <button class="btn-nav vip-btn" (click)="goToScene(2)">Tiếp theo ➔</button>
+      <div class="nav-controls">
+        <button class="btn-nav vip-btn" (click)="goToScene(2)">Tiếp theo ➔</button>
+      </div>
     </div>
   </div>
 
   <!-- ================= SCENE 2: CHẶNG 2 ================= -->
   <div class="scene fade-in" *ngIf="currentScene === 2">
-    <img [src]="scenesConfig[2].bgImage" alt="Chặng 2 Thỏ gặp hoa" class="full-screen-bg" />
+    <div class="game-container">
+      <img [src]="scenesConfig[2].bgImage" alt="Chặng 2 Thỏ gặp hoa" class="full-screen-bg" />
 
-    <div class="narration-box bounce-down">🗣️ "{{ scenesConfig[2].narrationText }}"</div>
+      <div class="narration-box bounce-down">🗣️ "{{ scenesConfig[2].narrationText }}"</div>
 
-    <!-- Vùng chạm Thỏ -->
-    <div class="hotspot rabbit-spot-2" (click)="playRabbitSound()" (touchstart)="playRabbitSound()">
-      <div class="speech-bubble pop-up" *ngIf="showRabbitBubble">Thỏ! Thỏ! 🐰✨</div>
-    </div>
+      <!-- Vùng chạm Thỏ -->
+      <div
+        class="hotspot rabbit-spot-2"
+        (click)="playRabbitSound()"
+        (touchstart)="playRabbitSound()"
+      >
+        <div class="speech-bubble pop-up" *ngIf="showRabbitBubble">Thỏ! Thỏ! 🐰✨</div>
+      </div>
 
-    <!-- Vùng chạm Hoa -->
-    <div class="hotspot flower-spot-2" (click)="playFlowerSound()" (touchstart)="playFlowerSound()">
-      <div class="speech-bubble pop-up flower-bubble" *ngIf="showFlowerBubble">Hoa! Hoa! 🌸✨</div>
-    </div>
+      <!-- Vùng chạm Hoa -->
+      <div
+        class="hotspot flower-spot-2"
+        (click)="playFlowerSound()"
+        (touchstart)="playFlowerSound()"
+      >
+        <div class="speech-bubble pop-up flower-bubble" *ngIf="showFlowerBubble">
+          Hoa! Hoa! 🌸✨
+        </div>
+      </div>
 
-    <div class="nav-controls">
-      <button class="btn-nav vip-btn" (click)="goToScene(1)">⬅️ Quay lại</button>
-      <button class="btn-nav vip-btn" (click)="goToScene(3)">Tiếp theo ➔</button>
+      <div class="nav-controls">
+        <button class="btn-nav vip-btn" (click)="goToScene(1)">⬅️ Quay lại</button>
+        <button class="btn-nav vip-btn" (click)="goToScene(3)">Tiếp theo ➔</button>
+      </div>
     </div>
   </div>
 
   <!-- ================= SCENE 3: CHẶNG 3 ================= -->
   <div class="scene fade-in" *ngIf="currentScene === 3">
-    <img [src]="scenesConfig[3].bgImage" alt="Chặng 3 Thỏ gặp bướm" class="full-screen-bg" />
+    <div class="game-container">
+      <img [src]="scenesConfig[3].bgImage" alt="Chặng 3 Thỏ gặp bướm" class="full-screen-bg" />
 
-    <div class="narration-box bounce-down">🗣️ "{{ scenesConfig[3].narrationText }}"</div>
+      <div class="narration-box bounce-down">🗣️ "{{ scenesConfig[3].narrationText }}"</div>
 
-    <!-- Vùng chạm Thỏ -->
-    <div class="hotspot rabbit-spot-3" (click)="playRabbitSound()" (touchstart)="playRabbitSound()">
-      <div class="speech-bubble pop-up" *ngIf="showRabbitBubble">Thỏ! Thỏ! 🐰✨</div>
-    </div>
-
-    <!-- Vùng chạm Bướm -->
-    <div
-      class="hotspot butterfly-spot-3"
-      (click)="playButterflySound()"
-      (touchstart)="playButterflySound()"
-    >
-      <div class="speech-bubble pop-up butterfly-bubble" *ngIf="showButterflyBubble">
-        Bướm! Bướm! 🦋✨
+      <!-- Vùng chạm Thỏ -->
+      <div
+        class="hotspot rabbit-spot-3"
+        (click)="playRabbitSound()"
+        (touchstart)="playRabbitSound()"
+      >
+        <div class="speech-bubble pop-up" *ngIf="showRabbitBubble">Thỏ! Thỏ! 🐰✨</div>
       </div>
-    </div>
 
-    <div class="nav-controls">
-      <button class="btn-nav vip-btn" (click)="goToScene(2)">⬅️ Quay lại</button>
-      <button class="btn-nav vip-btn btn-finish pulse-glow" (click)="finishGame()">
-        Kết thúc 🎉
-      </button>
+      <!-- Vùng chạm Bướm -->
+      <div
+        class="hotspot butterfly-spot-3"
+        (click)="playButterflySound()"
+        (touchstart)="playButterflySound()"
+      >
+        <div class="speech-bubble pop-up butterfly-bubble" *ngIf="showButterflyBubble">
+          Bướm! Bướm! 🦋✨
+        </div>
+      </div>
+
+      <div class="nav-controls">
+        <button class="btn-nav vip-btn" (click)="goToScene(2)">⬅️ Quay lại</button>
+        <button class="btn-nav vip-btn btn-finish pulse-glow" (click)="finishGame()">
+          Kết thúc 🎉
+        </button>
+      </div>
     </div>
   </div>
 </div>

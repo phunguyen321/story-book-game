@@ -1,4 +1,4 @@
-/* Khóa cuộn trang toàn cục, tối ưu di động và iPad */
+/* Khóa cuộn trang toàn cục, nền tổng màu đen để lấp viền khi xoay ngang */
 :host {
   display: block;
   width: 100vw;
@@ -8,7 +8,7 @@
   top: 0;
   left: 0;
   touch-action: none;
-  background-color: #0b0b0b;
+  background-color: #000000;
 }
 
 .game-scene {
@@ -21,6 +21,32 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  background-color: #000000;
+}
+
+/* =========================================================================
+   THAY ĐỔI CỐT LÕI: 
+   - Màn hình dọc: Tràn kín 100% màn hình (`width: 100vw; height: 100vh;`).
+   - Màn hình ngang: Tự động khóa theo chiều cao và tính toán chiều rộng chuẩn 9:16, 
+     giúp chừa 2 bên màu đen và cố định tuyệt đối tọa độ hotspot.
+   ========================================================================= */
+.game-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Khi thiết bị ở chế độ ngang (Landscape), tự động bóp chiều rộng lại theo tỉ lệ dọc để chừa viền đen 2 bên */
+@media (orientation: landscape) {
+  .game-container {
+    width: calc(100vh * 9 / 16);
+    height: 100vh;
+  }
 }
 
 .scene {
@@ -51,15 +77,16 @@
   }
 }
 
-/* Ép ảnh nền hiển thị trọn vẹn, sắc nét */
+/* Ép ảnh nền TRÀN KÍN tuyệt đối khung container */
 .full-screen-bg {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover; /* Tràn kín 100% màn hình dọc, không hở viền */
   position: absolute;
   top: 0;
   left: 0;
   z-index: 1;
+  pointer-events: none;
 }
 
 .overlay-content {
@@ -82,7 +109,7 @@
 }
 
 .book-title {
-  font-size: clamp(30px, 6vw, 52px);
+  font-size: clamp(26px, 5vw, 48px);
   color: #fff;
   margin-bottom: 30px;
   text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
@@ -107,8 +134,8 @@
 .btn-action {
   background: linear-gradient(135deg, #ffd700, #ff8c00);
   border: 4px solid #fff;
-  padding: 18px 42px;
-  font-size: clamp(18px, 4vw, 28px);
+  padding: 16px 36px;
+  font-size: clamp(16px, 3.5vw, 24px);
   font-weight: 800;
   color: #fff;
   border-radius: 50px;
@@ -151,9 +178,9 @@
   left: 50%;
   transform: translateX(-50%);
   background: rgba(255, 255, 255, 0.95);
-  padding: 10px 30px;
+  padding: 8px 22px;
   border-radius: 40px;
-  font-size: clamp(15px, 3.5vw, 24px);
+  font-size: clamp(14px, 3vw, 20px);
   color: #2c3e50;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
   border: 4px solid #a9dfbf;
@@ -176,15 +203,17 @@
   }
 }
 
-/* VÙNG CHẠM (HOTSPOT) */
+/* ================== VÙNG CHẠM (HOTSPOT) ================== */
 .hotspot {
   position: absolute;
   z-index: 20;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  /* Bật dòng dưới đây nếu muốn test khung vùng chạm */
+  /* border: 2px dashed rgba(255, 0, 0, 0.8); */
 }
 
-/* Tọa độ tối ưu cho các cảnh */
+/* Tọa độ chuẩn gắn chặt trong khung màn hình dọc */
 .rabbit-spot-1 {
   width: 40%;
   height: 47%;
@@ -219,15 +248,15 @@
 /* ================== BONG BÓNG HỘI THOẠI VIP ================== */
 .speech-bubble {
   position: absolute;
-  top: -55px;
+  top: -50px;
   left: 50%;
   transform: translateX(-50%);
   background: linear-gradient(135deg, #ffeb3b, #fbc02d);
   color: #fff;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  padding: 10px 22px;
+  padding: 8px 18px;
   border-radius: 30px;
-  font-size: clamp(15px, 3.2vw, 22px);
+  font-size: clamp(14px, 3vw, 18px);
   font-weight: 800;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
   border: 4px solid #fff;
@@ -238,10 +267,10 @@
 .speech-bubble::after {
   content: '';
   position: absolute;
-  bottom: -12px;
+  bottom: -10px;
   left: 50%;
   transform: translateX(-50%);
-  border-width: 12px 12px 0;
+  border-width: 10px 10px 0;
   border-style: solid;
   border-color: #ffeb3b transparent;
   display: block;
@@ -283,21 +312,21 @@
   }
 }
 
-/* ================== HỆ THỐNG NÚT ĐIỀU HƯỚNG VIP (GLASSMORPHISM) ================== */
+/* ================== HỆ THỐNG NÚT ĐIỀU HƯỚNG VIP ================== */
 .nav-controls {
   position: absolute;
-  bottom: 25px;
-  right: 25px;
+  bottom: 20px;
+  right: 20px;
   display: flex;
-  gap: 15px;
+  gap: 12px;
   z-index: 30;
 }
 
 .vip-btn {
   background: linear-gradient(135deg, rgba(93, 173, 226, 0.9), rgba(41, 128, 185, 0.95));
   border: 3px solid rgba(255, 255, 255, 0.9);
-  padding: 14px 30px;
-  font-size: clamp(15px, 3.2vw, 20px);
+  padding: 10px 22px;
+  font-size: clamp(13px, 2.8vw, 16px);
   font-weight: 800;
   color: #fff;
   border-radius: 50px;
